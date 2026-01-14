@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLTK Online Dictionary</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 420px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: #444;
+        }
+
+        h4 {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .tag {
+            background: #edf2f7;
+            padding: 5px 8px;
+            border-radius: 5px;
+            margin: 3px;
+            display: inline-block;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>📖 NLTK Online Dictionary</h2>
+
+        <form method="post">
+            <input type="text" name="word" placeholder="Enter a word">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if data %}
+        <div class="result">
+            <h3>Word: {{ data.word }}</h3>
+
+            <h4>Meanings:</h4>
+            <ul>
+                {% for m in data.meanings %}
+                    <li>{{ m }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4>Synonyms:</h4>
+            {% for s in data.synonyms %}
+                <span class="tag">{{ s }}</span>
+            {% endfor %}
+
+            <h4>Antonyms:</h4>
+            {% if data.antonyms %}
+                {% for a in data.antonyms %}
+                    <span class="tag">{{ a }}</span>
+                {% endfor %}
+            {% else %}
+                <p>Not available</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
